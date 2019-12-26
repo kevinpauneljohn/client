@@ -10,12 +10,19 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+//
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','LandingPageController');
 
 /*------------------Custom auth------------------------*/
 Route::get('/login','CustomAuth\LoginController@login')->name('login');
 Route::post('/login','CustomAuth\LoginController@authenticate')->name('login.authenticate');
 /*------------------End Of Custom auth------------------------*/
+
+Route::group(['middleware' => ['auth']], function (){
+    Route::get('/dashboard','DashboardController@dashboard')->name('dashboard');
+//    Route::post('/logout','CustomAuth\LoginController@logout')->name('logout');
+});
